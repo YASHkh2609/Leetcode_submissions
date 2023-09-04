@@ -17,18 +17,21 @@ public:
             k=k%n;
         }
         if(k>0){
-            int arr[k];
-            int j=0;
-            for(int i=n-k;i<n;i++){
-                arr[j]=nums[i];
-                j++;
-            }
-            for(int i=n-k-1;i>=0;i--){
-                nums[i+k]=nums[i];
-            }
-            for(int i=0;i<k;i++){
-                nums[i]=arr[i];
-            }
+            // int arr[k];
+            // int j=0;
+            // for(int i=n-k;i<n;i++){
+            //     arr[j]=nums[i];
+            //     j++;
+            // }
+            // for(int i=n-k-1;i>=0;i--){
+            //     nums[i+k]=nums[i];
+            // }
+            // for(int i=0;i<k;i++){
+            //     nums[i]=arr[i];
+            // }
+            reverse(nums.begin(),nums.end()-k);
+            reverse(nums.end()-k,nums.end());
+            reverse(nums.begin(),nums.end());
         }
     }
 };
