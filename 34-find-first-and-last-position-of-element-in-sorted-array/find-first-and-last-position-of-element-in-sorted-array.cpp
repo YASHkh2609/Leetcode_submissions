@@ -4,17 +4,17 @@ public:
         auto start=lower_bound(nums.begin(),nums.end(),target)-nums.begin();
         auto end=upper_bound(nums.begin(),nums.end(),target)-nums.begin();
         end--;
-        vector<int> ans;
+        vector<int> ans(2,0);
         if(start!=nums.size() && nums[start]==target){
-            ans.push_back(start);
+            ans[0]=start;
         }
         else
-            ans.push_back(-1);
+            ans[0]=-1;
         if(end>=0 && nums[end]==target){
-            ans.push_back(end);
+            ans[1]=end;
         }
         else
-            ans.push_back(-1);
+            ans[1]=-1;
         return ans;
     }
 };
