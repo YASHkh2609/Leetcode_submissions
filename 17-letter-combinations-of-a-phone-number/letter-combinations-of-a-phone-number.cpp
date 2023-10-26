@@ -1,9 +1,6 @@
 class Solution {
 public:
     void getCombination(string digits, vector<string>&ans,string keys[], string str, int i){
-        if(digits.length()==0){
-            return;
-        }
         if(i==digits.length()){
             ans.push_back(str);
             return;
@@ -21,6 +18,7 @@ public:
         string keys[]={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
         vector<string>ans;
         string str;
+        if(digits.length()==0)return ans;
         getCombination(digits,ans,keys, str,0);
         return ans;
     }
