@@ -9,37 +9,33 @@
 class Solution {
 public:
     ListNode *detectCycle(ListNode *head) {
-        // map<int,pair<int, ListNode*>>mpp;
+        //Brute Force using extra space
+        unordered_set<ListNode*>st;
+        ListNode* temp=head;
+        while(temp!=NULL){
+            if(st.find(temp)!=st.end())return temp;
+            st.insert(temp);
+            temp=temp->next;
+        }
+        return NULL;
+        //optimal by slow and fast pointer approach
+        // ListNode* slow=head;
+        // ListNode* fast=head;
+        // ListNode* entry=head;
         // int flag=0;
-        // ListNode* temp=head;
-        // while(flag==0){
-        //     if(mpp.find({{temp->val,temp->next}})==mpp.end()){
-        //         mpp.insert({temp->data,temp->next});
-        //         temp=temp->next;
-        //     }
-        //     else{ 
-        //         flag=1;
-        //         return temp;
+        // if(head==NULL || head->next==NULL)return NULL;
+
+        // while(fast->next!=NULL && fast->next->next!=NULL){
+        //     slow=slow->next;
+        //     fast=fast->next->next;
+        //     if(slow==fast){
+        //         while(slow!=entry){
+        //             slow=slow->next;
+        //             entry=entry->next;
+        //         }
+        //         return slow;
         //     }
         // }
         // return NULL;
-        ListNode* slow=head;
-        ListNode* fast=head;
-        ListNode* entry=head;
-        int flag=0;
-        if(head==NULL || head->next==NULL)return NULL;
-
-        while(fast->next!=NULL && fast->next->next!=NULL){
-            slow=slow->next;
-            fast=fast->next->next;
-            if(slow==fast){
-                while(slow!=entry){
-                    slow=slow->next;
-                    entry=entry->next;
-                }
-                return slow;
-            }
-        }
-        return NULL;
     }
 };
