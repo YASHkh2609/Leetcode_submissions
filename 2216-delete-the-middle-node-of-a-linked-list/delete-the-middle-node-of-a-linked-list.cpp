@@ -18,14 +18,18 @@ public:
         }
         ListNode* start=new ListNode();
         start->next=head;
-        ListNode* slow=start;
+        ListNode* temp=start;
+        ListNode* slow=head;
         ListNode* fast=head;
         while(fast!=NULL && fast->next!=NULL){
+            temp=temp->next;
             slow=slow->next;
             fast=fast->next->next;
         }
 
-        slow->next=slow->next->next;
+        temp->next=slow->next;
+        slow->next=NULL;
+        delete(slow);
         return head;
 
 
