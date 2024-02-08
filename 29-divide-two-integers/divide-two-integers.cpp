@@ -11,7 +11,7 @@ public:
         int ans=0;
         while(Dividend>=Divisor){
             int cnt=0;
-            while(Dividend>(Divisor<<(cnt+1))){
+            while((Dividend>(Divisor<<(cnt+1)))){
                 cnt++;
             }
             ans+=1<<cnt;
