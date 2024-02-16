@@ -11,19 +11,11 @@
  */
 class Solution {
 public:
-    bool checkSame(TreeNode* p, TreeNode* q){
-        if(p==NULL && q==NULL)return true;
-        if((p && !q) || (!p && q))return false; 
 
-        bool left=checkSame(p->left, q->left);
-        if(!left)return false;
-        bool right=checkSame(p->right, q->right);
-        if(!right)return false;
-
-        if(p->val==q->val)return true;
-        return false;
-    }
     bool isSameTree(TreeNode* p, TreeNode* q) {
-        return checkSame(p,q);
+        //basically we are doing traversal of tree - preorder and just check they are same
+        if(p==NULL || q==NULL)return (p==q);
+        return p->val==q->val && isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
+        // preorder since we did root-left-right    
     }
 };
