@@ -17,7 +17,7 @@ public:
 
         queue<TreeNode*>q;
         q.push(root);
-        int cnt=1;
+        bool leftToright=true;// true when normal insertion , false when opposite
         while(!q.empty()){
             vector<int>level;
             int size=q.size();
@@ -25,17 +25,13 @@ public:
             for(int i=0;i<size;i++){
                 TreeNode* temp=q.front();
                 q.pop();
-                level.push_back(temp->val);
+                if(leftToright)level.push_back(temp->val);
+                else level.insert(level.begin(), temp->val);
                 if(temp->left)q.push(temp->left);
                 if(temp->right)q.push(temp->right);
             }
-            if(cnt%2==0){
-                reverse(level.begin(), level.end());
-                ans.push_back(level);
-            }
-            else
-                ans.push_back(level);      
-            cnt++;
+            ans.push_back(level);      
+            leftToright=!leftToright;
         }
         return ans;
     }
