@@ -19,11 +19,36 @@ public:
         ans.push_back(lh+rh);
         return 1+max(lh,rh);
     }
-    int diameterOfBinaryTree(TreeNode* root) {
+    int height1(TreeNode* root){
         if(root==NULL)return 0;
-        vector<int>ans;
-        int h = height(root, ans);
-        sort(ans.begin(), ans.end());
-        return ans.back();        
+
+        int lh=height1(root->left);
+        int rh=height1(root->right);
+
+        return 1+max(lh,rh);
+    }
+    int maxi=0;
+    void give_diameter(TreeNode* root, int &maxi){
+        if(root==NULL) return;
+
+        int lh=height1(root->left);
+        int rh=height1(root->right);
+
+        maxi=max(maxi, lh+rh);
+        give_diameter(root->left, maxi);
+        give_diameter(root->right, maxi);
+
+    }
+    int diameterOfBinaryTree(TreeNode* root) {
+        //Below soln is O(N^2) and uses an extra space
+        // if(root==NULL)return 0;
+        // vector<int>ans;
+        // int h = height(root, ans);
+        // sort(ans.begin(), ans.end());
+        // return ans.back();        
+        
+        //Better solution 
+        give_diameter(root, maxi);
+        return maxi;
     }
 };
