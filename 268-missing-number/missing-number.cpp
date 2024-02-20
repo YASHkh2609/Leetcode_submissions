@@ -1,16 +1,16 @@
 class Solution {
 public:
     int missingNumber(vector<int>& nums) {
-        sort(nums.begin(),nums.end());
-        if(nums.size()==nums[nums.size()-1]){
-            for(int i=0;i<nums.size()-1;i++){
-                if(nums[i+1]-nums[i]==2){
-                    return i+1;
-                }
-            }
+        long long sum_arr=0;
+        int max=0,min=INT_MAX;
+        for(int i=0;i<nums.size();i++){
+            if(nums[i]>max)max=nums[i];
+            if(nums[i]<min)min=nums[i];
+            sum_arr+=nums[i];
         }
-        else 
-            return nums.size();
-        return 0;
+        long long n_sum = (max*(max+1))/2;
+        if(min!=0)return 0;
+        else if(n_sum-sum_arr==0)return max+1;
+        return n_sum-sum_arr;
     }
 };
