@@ -1,20 +1,13 @@
 class Solution {
 public:
     int findJudge(int n, vector<vector<int>>& trust) {
-        vector<bool>arr(n+1,0);
+        vector<int>arr(n+1,0), trusted(n+1,0);
         for(int i=0;i<trust.size();i++){
             arr[trust[i][0]]=1;
+            trusted[trust[i][1]]++;
         }
-        int town_judge=-1;
         for(int j=1;j<n+1;j++){
-            if(arr[j]==0)town_judge=j;
-        }
-        int cnt=0;
-        for(int k=0;k<trust.size();k++){
-            if(trust[k][1]==town_judge)cnt++;
-        }
-        if(cnt==n-1){
-            return town_judge;
+            if(arr[j]==0 && trusted[j]==n-1)return j;
         }
         return -1;
     }
