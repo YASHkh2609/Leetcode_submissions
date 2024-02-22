@@ -5,11 +5,10 @@ public:
         for(int i=0;i<trust.size();i++){
             arr[trust[i][0]]=1;
         }
-        int town_judge=0;
+        int town_judge=-1;
         for(int j=1;j<n+1;j++){
             if(arr[j]==0)town_judge=j;
         }
-        if(town_judge==0)town_judge=-1;
         int cnt=0;
         for(int k=0;k<trust.size();k++){
             if(trust[k][1]==town_judge)cnt++;
