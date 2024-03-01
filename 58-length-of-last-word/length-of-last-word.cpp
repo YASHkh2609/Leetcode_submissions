@@ -4,7 +4,7 @@ public:
         string ans="";
         string temp="";
         for(int i=0; i<s.length();i++){
-            if(int(s[i])!=32){
+            if(s[i]-'A'>=0){
                 temp+=s[i];
             }
             else{
