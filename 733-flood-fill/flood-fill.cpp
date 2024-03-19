@@ -14,25 +14,18 @@ public:
             int row=q.front().first;
             int col=q.front().second;
             q.pop();
-            if((row-1)>=0 && !vis[row-1][col] && image[row-1][col]==og_color){
-                vis[row-1][col]=1;
-                q.push({row-1,col});
-                image[row-1][col]=color;
-            }
-            if((row+1)<m && !vis[row+1][col] && image[row+1][col]==og_color){
-                vis[row+1][col]=1;
-                q.push({row+1,col});
-                image[row+1][col]=color;
-            }
-            if((col-1)>=0 && !vis[row][col-1] && image[row][col-1]==og_color){
-                vis[row][col-1]=1;
-                q.push({row,col-1});
-                image[row][col-1]=color;
-            }
-            if((col+1)<n && !vis[row][col+1] && image[row][col+1]==og_color){
-                vis[row][col+1]=1;
-                q.push({row,col+1});
-                image[row][col+1]=color;
+            int delrow[]={-1,0,1,0};
+            int delcol[]={0,-1,0,1};
+            for(int i=0;i<4;i++){
+                int nrow=row+delrow[i];
+                int ncol=col+delcol[i];
+
+                if(nrow>=0 && nrow<m && ncol>=0 && ncol<n && 
+                !vis[nrow][ncol] && image[nrow][ncol]==og_color){
+                    vis[nrow][ncol]=1;
+                    q.push({nrow,ncol});
+                    image[nrow][ncol]=color;
+                }
             }
         }
         return image;
