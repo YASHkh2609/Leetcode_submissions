@@ -11,18 +11,32 @@
  */
 class Solution {
 public:
+    int left_height(TreeNode* root){
+        int height=0;
+        TreeNode* temp=root;
+        while(temp!=NULL){
+            height++;
+            temp=temp->left;
+        }
+        return height;
+    }
+    int right_height(TreeNode* root){
+        int height=0;
+        TreeNode* temp=root;
+        while(temp!=NULL){
+            height++;
+            temp=temp->right;
+        }
+        return height;
+    }
     int countNodes(TreeNode* root) {
         if(root==NULL)return 0;
-        int cnt=0;
-        queue<TreeNode*>q;
-        q.push(root);
-        while(!q.empty()){
-            cnt++;
-            TreeNode* temp=q.front();
-            q.pop();
-            if(temp->left)q.push(temp->left);
-            if(temp->right)q.push(temp->right);
-        }
-        return cnt;
+        
+        int lh=left_height(root);
+        int rh=right_height(root);
+
+        if(lh==rh)return (1<<lh)-1;
+
+        return 1+countNodes(root->left)+countNodes(root->right);
     }
 };
