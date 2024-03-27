@@ -18,7 +18,7 @@ public:
     //     pre_order(root->left, preorder);
     //     pre_order(root->right, preorder);
     // }
-    TreeNode * prev=NULL;
+    //TreeNode * prev=NULL;
     void flatten(TreeNode* root) {
         if(root==NULL)return;
         // vector<int>preorder;
@@ -32,11 +32,25 @@ public:
         //     temp=temp->right; 
         // }
         // temp->right=NULL;
-        flatten(root->right);
-        flatten(root->left);
+        //Approach1
+        // flatten(root->right);
+        // flatten(root->left);
 
-        root->right=prev;
-        root->left=NULL;
-        prev=root;
+        // root->right=prev;
+        // root->left=NULL;
+        // prev=root;
+        //Approach 2
+        TreeNode* cur=root;
+        while(cur!=NULL){
+            if(cur->left){
+                TreeNode* prev=cur->left;
+                while(prev->right)prev=prev->right;
+
+                prev->right=cur->right;
+                cur->right=cur->left;
+                cur->left=NULL;
+            }
+            cur=cur->right;
+        }
     }
 };
