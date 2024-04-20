@@ -6,10 +6,17 @@ public:
 
         for(auto it: graph[src]){
             if(!vis[it]){
-                if(dfs(it, graph, vis, pathvis, safe_nodes)) return true;
+                if(dfs(it, graph, vis, pathvis, safe_nodes)){
+                    safe_nodes[it]=0;
+                    return true;
+                }
+
             }
             else{
-                if(pathvis[it])return true;
+                if(pathvis[it]){
+                    safe_nodes[it]=0;
+                    return true;
+                }
             }
         }
         safe_nodes[src]=1;
