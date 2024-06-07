@@ -34,7 +34,7 @@ public:
 class Solution {
 public:
     vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
-        map<string, int>mpp;
+        unordered_map<string, int>mpp;
         DisjointSet ds(accounts.size());
         for(int i=0;i<accounts.size();i++){
             for(int j=1;j<accounts[i].size();j++){
@@ -46,7 +46,7 @@ public:
                 }
             }
         }
-        map<int, vector<string>>p2mail;
+        unordered_map<int, vector<string>>p2mail;
         for(auto it:mpp){
             int Uparent=ds.findUparent(it.second);
             p2mail[Uparent].push_back(it.first);
