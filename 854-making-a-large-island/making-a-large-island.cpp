@@ -43,8 +43,7 @@ public:
                     for(int k=0;k<4;k++){
                         int nrow=i+delrow[k];
                         int ncol=j+delcol[k];
-                        if(nrow>=0 && nrow<n && ncol>=0 && ncol<n &&grid[nrow][ncol]==1&& 
-                        ds.findUparent(i*n+j)!=ds.findUparent(nrow*n+ncol)){
+                        if(nrow>=0 && nrow<n && ncol>=0 && ncol<n &&grid[nrow][ncol]==1){
                             ds.union_by_size(i*n+j, nrow*n+ncol);
                         }
                     }
