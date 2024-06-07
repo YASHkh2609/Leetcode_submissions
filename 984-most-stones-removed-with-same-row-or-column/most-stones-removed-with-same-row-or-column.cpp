@@ -38,10 +38,10 @@ public:
         DisjointSet ds(n);
         for(int i=0;i<n;i++){
             for(int j=i+1;j<n;j++){
-                int row1=stones[i][0], col1=stones[i][1];
-                int row2=stones[j][0], col2=stones[j][1];
+                // int row1=stones[i][0], col1=stones[i][1];
+                // int row2=stones[j][0], col2=stones[j][1];
 
-                if(row1 == row2 || col1 == col2){
+                if(stones[i][0] == stones[j][0] || stones[i][1] == stones[j][1]){
                     ds.union_by_rank(i,j);
                 }
             }
