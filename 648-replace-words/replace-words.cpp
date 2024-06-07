@@ -18,20 +18,19 @@ public:
 
         for(int i=0;i<temp.size();i++){
             for(int j=1;j<=temp[i].length();j++){
-                if(st.find(temp[i].substr(0,j))!=st.end()){
-                    auto it=st.find(temp[i].substr(0,j));
-                    //cout<<*it<<" ";
-                    temp[i]=*it;
+                string prefix=temp[i].substr(0,j);
+                if(st.find(prefix)!=st.end()){
+                    temp[i]=prefix;
                     break;
                 }
             }
+
         }
         string ans="";
         for(int i=0;i<temp.size();i++){
-            ans+=temp[i];
-            if(i!=temp.size()-1)
-                ans+=" ";
+            ans+=temp[i]+" ";
         }
+        ans.erase(ans.size()-1);
         return ans;
     }
 };
