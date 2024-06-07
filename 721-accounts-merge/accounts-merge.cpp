@@ -42,7 +42,7 @@ public:
                     mpp[accounts[i][j]]=i;
                 }
                 else{//exists in map ==> same component ==>union
-                    ds.union_by_rank(mpp.find(accounts[i][j])->second,i);
+                    ds.union_by_rank(mpp[accounts[i][j]],i);
                 }
             }
         }
@@ -55,8 +55,8 @@ public:
         for(auto it:p2mail){
             string name=accounts[it.first][0];
             sort(it.second.begin(), it.second.end());
-            it.second.insert(it.second.begin(), name);
             ans.push_back(it.second);
+            ans.back().insert(ans.back().begin(), name);
         }
         return ans;
     }
