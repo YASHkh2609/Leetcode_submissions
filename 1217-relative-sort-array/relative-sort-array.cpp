@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<int> relativeSortArray(vector<int>& arr1, vector<int>& arr2) {
-        map<int, int>mpp;
+        unordered_map<int, int>mpp;
         for(int i=0;i<arr2.size();i++){
             mpp[arr2[i]]=i;
         }
