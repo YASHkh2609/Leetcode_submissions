@@ -25,5 +25,22 @@ public:
             else
                 mid++;
         }
+        // for sorting in decreasing order
+        // int low=0;
+        // int mid=n-1;
+        // int high=n-1;
+        // while(mid>=low){
+        //     if(nums[mid]<1){
+        //         swap(nums[mid],nums[high]);
+        //         high--;
+        //         mid--;
+        //     }
+        //     else if(nums[mid]>1){
+        //         swap(nums[mid],nums[low]);
+        //         low++;
+        //     }
+        //     else
+        //         mid--;
+        //}
     }
 };
