@@ -11,14 +11,17 @@ public:
         //     }
         // }
         // return cnt;
-        int count[200001]={0};
-        // int maxi=0;
+        //count array has been taken of maximum possible with these constraints
+        int maxi=0;
         for(int i=0;i<nums.size();i++){
-            // maxi=max(maxi, nums[i]);
+            maxi=max(maxi, nums[i]);
+        }
+        vector<int>count(nums.size()+ maxi+1, 0);
+        for(int i=0;i<nums.size();i++){
             count[nums[i]]++;
         }
         int ans=0;
-        for(int i=0;i<200001;i++){
+        for(int i=0;i<nums.size()+ maxi+1;i++){
             if(count[i]>1){
                 ans+=count[i]-1;
                 count[i+1]+=count[i]-1;
