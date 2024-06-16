@@ -1,20 +1,26 @@
 class Solution {
 public:
     int minPatches(vector<int>& nums, int n) {
-        long missing = 1;
-        int patches = 0;
-        int index = 0;
-
-        while (missing <= n) {
-            if (index < nums.size() && nums[index] <= missing) {
-                missing += nums[index];
-                index++;
-            } else {
-                missing += missing;
-                patches++;
+        long long expectedSum=1;
+        long long sumFormed=0;
+        int cnt=0;
+        int m=nums.size();
+        int i=0;
+        while(expectedSum<=n){
+            if(expectedSum<=sumFormed){
+                expectedSum=sumFormed+1;
+            }
+            else{
+                if(i<m && nums[i]<=expectedSum){
+                    sumFormed+=nums[i];
+                    i++;
+                }
+                else{
+                    cnt++;
+                    sumFormed+=expectedSum;
+                }
             }
         }
-
-        return patches;
+        return cnt;
     }
 };
