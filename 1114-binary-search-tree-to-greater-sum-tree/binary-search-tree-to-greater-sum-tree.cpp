@@ -27,16 +27,27 @@ private:
             if(inOrder[i]>root->val){
                 greaterSum+=inOrder[i];
             }
+            else break;
         }
         root->val = root->val + greaterSum;
         replaceValues(root->right, inOrder);
     }
+    void helper(TreeNode * root, int& nodeSum){
+        if(root==NULL)return;
+
+        helper(root->right, nodeSum);
+        nodeSum+=root->val;
+        root->val=nodeSum;
+        helper(root->left, nodeSum);
+    }
 public:
     TreeNode* bstToGst(TreeNode* root) {
-        vector<int>inOrder;
-        inOrderTraversal(root, inOrder);
-        reverse(inOrder.begin(), inOrder.end());
-        replaceValues(root,inOrder);
+        // vector<int>inOrder;
+        // inOrderTraversal(root, inOrder);
+        // reverse(inOrder.begin(), inOrder.end());
+        // replaceValues(root,inOrder);
+        int nodeSum=0;
+        helper(root, nodeSum);
         return root;
     }
 };
