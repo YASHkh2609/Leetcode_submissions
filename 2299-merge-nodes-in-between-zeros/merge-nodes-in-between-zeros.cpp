@@ -11,24 +11,24 @@
 class Solution {
 public:
     ListNode* mergeNodes(ListNode* head) {
-        ListNode * temp = new ListNode(-1);
-        ListNode * copy =temp;
-        ListNode * cur = head->next;
-        ListNode* prev=head;
+        ListNode * tobeModified = head->next;
+        ListNode * cur = tobeModified->next;
         int sum=0;
         while(cur!=NULL){
             if(cur->val!=0){
                 sum+=cur->val;
+                cur=cur->next;
+
             }
             else{
-                ListNode * newNode = new ListNode(sum);
-                temp->next=newNode;
-                temp=temp->next;
+                tobeModified->val+=sum;
+                tobeModified->next=cur->next;
+                if(tobeModified->next==NULL)break;
+                tobeModified=tobeModified->next;
+                cur=tobeModified->next;
                 sum=0;
             }
-            prev=cur;
-            cur=cur->next;
         }
-        return copy->next;
+        return head->next;
     }
 };
