@@ -15,27 +15,29 @@ public:
         l=head;
         mid=head->next;
         r=mid->next;
-        vector<int>criticalPoints;
-        int midcnt=1;
-
+        int first=-1,prev= -1;
+        int cur=-1;
+        int midcnt=0;
+        int minDist=INT_MAX;
         while(r!=NULL){
             if((mid->val<l->val && mid->val<r->val) || (mid->val>l->val && mid->val >r->val)){
-                criticalPoints.push_back(midcnt);
+                if(first==-1){
+                    first = midcnt;
+                    prev=midcnt;
+                }
+                else {
+                    cur = midcnt;
+                    minDist = min(minDist, cur - prev);
+                    prev=cur;
+                }
             }
             midcnt++;
             l=mid;
             mid=r;
             r=r->next;
         }
-        vector<int>ans(2, -1);
-        if(criticalPoints.size()<2)return ans;
-        int n=criticalPoints.size();
-        ans[1] = criticalPoints[n-1] - criticalPoints[0];
-        int minDist = INT_MAX;
-        for(int i=0;i<n-1;i++){
-            minDist = min(minDist, criticalPoints[i+1]-criticalPoints[i]);
-        }
-        ans[0] = minDist;
-        return ans;
+        int maxDist = cur - first;
+        if(cur==-1)return{-1,-1};
+        return {minDist, maxDist};
     }
 };
