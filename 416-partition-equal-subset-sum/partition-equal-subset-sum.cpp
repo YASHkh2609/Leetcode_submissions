@@ -26,24 +26,43 @@ public:
         // vector<vector<int>>dp(n, vector<int>(k+1, -1));
         // return f(n-1, k, nums, dp);
 
-        vector<vector<bool>>dp(n, vector<bool>(k+1, false));
+        // vector<vector<bool>>dp(n, vector<bool>(k+1, false));
 
-        for(int i=0;i<n;i++){
-            dp[i][0]=true;
-        }
+        // for(int i=0;i<n;i++){
+        //     dp[i][0]=true;
+        // }
 
-        if(nums[0]<=k)dp[0][nums[0]]=true;
+        // if(nums[0]<=k)dp[0][nums[0]]=true;
+
+        // for(int ind=1;ind<n;ind++){
+        //     for(int target=1;target<=k;target++){
+        //         bool notPick = dp[ind-1][target];
+        //         bool pick=false;
+        //         if(target>=nums[ind])
+        //             pick = dp[ind-1][target-nums[ind]];
+
+        //         dp[ind][target] = (pick || notPick); 
+        //     }
+        // }
+        // return dp[n-1][k];
+
+        vector<bool>dp(k+1, false);
+        if(nums[0]<=k)dp[nums[0]]=true;
 
         for(int ind=1;ind<n;ind++){
+            vector<bool>temp(k+1, false);
+            temp[0]=true;
             for(int target=1;target<=k;target++){
-                bool notPick = dp[ind-1][target];
+                bool notPick = dp[target];
                 bool pick=false;
                 if(target>=nums[ind])
-                    pick = dp[ind-1][target-nums[ind]];
+                    pick = dp[target-nums[ind]];
 
-                dp[ind][target] = (pick || notPick); 
+                temp[target] = (pick || notPick); 
             }
+            dp=temp;
         }
-        return dp[n-1][k];
+        return dp[k];
+
     }
 };
