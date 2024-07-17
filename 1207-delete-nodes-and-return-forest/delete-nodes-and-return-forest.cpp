@@ -10,68 +10,35 @@
  * };
  */
 class Solution {
+private:
+    TreeNode* postOrder(TreeNode* root, set<int>&to_delete, vector<TreeNode*>&forest){
+        if(root==NULL)return NULL;
+
+        root->left = postOrder(root->left, to_delete, forest);
+        root->right = postOrder(root->right, to_delete, forest);
+
+        //process the root
+
+        if(to_delete.find(root->val)==to_delete.end()){
+            return root;
+        }
+
+        //it is to be deleted
+        if(root->left)forest.push_back(root->left);
+        if(root->right)forest.push_back(root->right);
+
+        root->left=NULL;
+        root->right=NULL;
+        return NULL;
+    }
 public:
-    void get_ultimate_parent(TreeNode *root, unordered_map<TreeNode*, TreeNode*>&Uparent){
-        if(root->left){
-            Uparent[root->left]=Uparent[root];
-            get_ultimate_parent(root->left, Uparent);
-        }
-        if(root->right){
-            Uparent[root->right]=Uparent[root];
-            get_ultimate_parent(root->right, Uparent);
-        }
-    }
-    void get_immediate_parent(TreeNode *root, unordered_map<TreeNode*, TreeNode*>&Iparent){
-        if(root->left){
-            Iparent[root->left]=root;
-            get_immediate_parent(root->left, Iparent);
-        }
-        if(root->right){
-            Iparent[root->right]=root;
-            get_immediate_parent(root->right, Iparent);
-        }
-    }
     vector<TreeNode*> delNodes(TreeNode* root, vector<int>& to_delete) {
-        unordered_map<TreeNode*, TreeNode*>Uparent;
-        unordered_map<TreeNode*, TreeNode*>Iparent;
-        Uparent[root]=root;
-        Iparent[root]=NULL;
-        get_ultimate_parent(root, Uparent);    
-        get_immediate_parent(root, Iparent);
+        set<int>to_be_deleted(to_delete.begin(),to_delete.end());
+        vector<TreeNode*>forest;
+        TreeNode* node = postOrder(root, to_be_deleted, forest);
 
-        for(auto it:to_delete){
-            TreeNode* nodeToBeDeleted;
-            for(auto itr:Uparent){
-                if(it==itr.first->val)nodeToBeDeleted=itr.first;
-            }
-            Uparent[nodeToBeDeleted]=NULL;
-            if(Iparent[nodeToBeDeleted]!=NULL){
-                if(nodeToBeDeleted==Iparent[nodeToBeDeleted]->left)
-                    Iparent[nodeToBeDeleted]->left=NULL;
-                else
-                    Iparent[nodeToBeDeleted]->right=NULL;
-                Iparent[nodeToBeDeleted]=NULL;
-            }
+        if(node!=NULL)forest.push_back(root);
 
-            if(nodeToBeDeleted->left){
-                Iparent[nodeToBeDeleted->left]=NULL;
-                Uparent[nodeToBeDeleted->left]=nodeToBeDeleted->left;
-                get_ultimate_parent(nodeToBeDeleted->left, Uparent);
-            }
-            if(nodeToBeDeleted->right){
-                Iparent[nodeToBeDeleted->right]=NULL;
-                Uparent[nodeToBeDeleted->right]=nodeToBeDeleted->right;
-                get_ultimate_parent(nodeToBeDeleted->right, Uparent);
-            }
-            nodeToBeDeleted->left=NULL;
-            nodeToBeDeleted->right=NULL;
-        }    
-        vector<TreeNode*>ans;
-        for(auto it:Uparent){
-            if(it.second!=NULL && it.first==it.second){
-                ans.push_back(it.first);
-            }
-        }
-        return ans;
+        return forest;
     }
 };
