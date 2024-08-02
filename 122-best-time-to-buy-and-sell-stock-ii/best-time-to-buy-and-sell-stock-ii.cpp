@@ -19,23 +19,44 @@ public:
         int n=prices.size();
         // vector<vector<int>>dp(n, vector<int>(2, -1));
         // return getmaxProfit(0, 1, prices, dp);
-        vector<vector<int>>dp(n+1, vector<int>(2, -1));
+        // vector<vector<int>>dp(n+1, vector<int>(2, -1));
 
-        dp[n][0]=0;
-        dp[n][1]=0;
+        // dp[n][0]=0;
+        // dp[n][1]=0;
 
+        // for(int ind=n-1;ind>=0;ind--){
+        //     for(int buy=0;buy<=1;buy++){
+        //         int profit=0;
+        //         if(buy){ // i'm not holding a stock
+        //             profit = max(-prices[ind]+dp[ind+1][0], 0+dp[ind+1][1]);
+        //         }
+        //         else{//holding a stock
+        //             profit = max(prices[ind]+dp[ind+1][1],0+dp[ind+1][0]);
+        //         }
+        //         dp[ind][buy] = profit;
+        //     }
+        // }
+        // return dp[0][1];
+
+        vector<int>dp(2, -1);
+        dp[0]=0;
+        dp[1]=0;
         for(int ind=n-1;ind>=0;ind--){
+            vector<int>temp(2,-1);
             for(int buy=0;buy<=1;buy++){
                 int profit=0;
                 if(buy){ // i'm not holding a stock
-                    profit = max(-prices[ind]+dp[ind+1][0], 0+dp[ind+1][1]);
+                    profit = max(-prices[ind]+dp[0], 0+dp[1]);
                 }
                 else{//holding a stock
-                    profit = max(prices[ind]+dp[ind+1][1],0+dp[ind+1][0]);
+                    profit = max(prices[ind]+dp[1],0+dp[0]);
                 }
-                dp[ind][buy] = profit;
+                temp[buy] = profit;
             }
+            dp=temp;
         }
-        return dp[0][1];
+        return dp[1];
+
+
     }
 };
