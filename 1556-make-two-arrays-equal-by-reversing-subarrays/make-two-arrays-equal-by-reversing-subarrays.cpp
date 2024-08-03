@@ -14,9 +14,6 @@ public:
         for(auto it:mpp1){
             if(mpp2[it.first]==0 || mpp2[it.first]!=mpp1[it.first])return false;
         }
-        for(auto it:mpp2){
-            if(mpp1[it.first]==0 || mpp1[it.first]!=mpp2[it.first])return false;
-        }
         return true;
     }
 };
