@@ -1,25 +1,38 @@
 class Solution {
+private:
+    static bool cmp(pair<char, int>&a, pair<char, int>&b){
+        return a.second>b.second;
+    }
 public:
     int minimumPushes(string word) {
-        // Frequency vector to store count of each letter
-        vector<int> frequency(26, 0);
-
-        // Count occurrences of each letter
-        for (char& c : word) {
-            ++frequency[c - 'a'];
+        unordered_map<char, int>freq;
+        for(int i=0;i<word.length();i++){
+            freq[word[i]]++;
         }
-
-        // Sort frequencies in descending order
-        sort(frequency.rbegin(), frequency.rend());
-
-        int totalPushes = 0;
-
-        // Calculate total number of presses
-        for (int i = 0; i < 26; ++i) {
-            if (frequency[i] == 0) break;
-            totalPushes += (i / 8 + 1) * frequency[i];
+        vector<pair<char,int>>vec;
+        for(auto it:freq){
+            vec.push_back({it.first, it.second});
         }
+        sort(vec.begin(), vec.end(), cmp);
 
-        return totalPushes;
+        int cnt=0;
+        int presses =0;
+        for(auto it:vec){
+            int num=it.second;
+            if(cnt/8==0){
+                presses +=num*1;
+            }
+            else if(cnt/8==1){
+                presses+=2*num;
+            }
+            else if(cnt/8==2){
+                presses+=3*num;
+            }
+            else{
+                presses+=4*num;
+            }
+            cnt++;
+        }
+        return presses;
     }
 };
