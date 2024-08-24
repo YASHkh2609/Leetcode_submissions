@@ -20,7 +20,7 @@ public:
         // return f(0, 1, 2, prices,dp);
         //base case
         //ind==n
-        vector<vector<vector<int>>>dp(n+1, vector<vector<int>>(2, vector<int>(3,0)));
+        // vector<vector<vector<int>>>dp(n+1, vector<vector<int>>(2, vector<int>(3,0)));
         //above we have initialised our dp with 0 so we dont need to write base case
         // for(int j=0;j<=1;j++){
         //     for(int k=0;k<=2;k++){
@@ -33,23 +33,47 @@ public:
         //     }
         // }
 
+        // for(int ind=n-1;ind>=0;ind--){
+        //     for(int buy=0;buy<=1;buy++){
+        //         for(int cap=1;cap<=2;cap++){
+        //             int profit=0;
+        //             if(buy){
+        //                 profit=max(-prices[ind]+dp[ind+1][0][cap],
+        //                            0+dp[ind+1][1][cap]);
+        //             }
+        //             else{
+        //                 profit=max(prices[ind]+dp[ind+1][1][cap-1],
+        //                           0+dp[ind+1][0][cap]);
+        //             }
+
+        //             dp[ind][buy][cap]=profit;
+        //         }
+        //     }
+        // }
+        // return dp[0][1][2];
+        
+        //SPACE OPTIMIZATION
+        vector<vector<int>>dp(2, vector<int>(3,0));
+        // initialised as 0 so no need for base case
         for(int ind=n-1;ind>=0;ind--){
+            vector<vector<int>>temp(2, vector<int>(3,0));
             for(int buy=0;buy<=1;buy++){
                 for(int cap=1;cap<=2;cap++){
                     int profit=0;
                     if(buy){
-                        profit=max(-prices[ind]+dp[ind+1][0][cap],
-                                   0+dp[ind+1][1][cap]);
+                        profit=max(-prices[ind]+dp[0][cap],
+                                   0+dp[1][cap]);
                     }
                     else{
-                        profit=max(prices[ind]+dp[ind+1][1][cap-1],
-                                  0+dp[ind+1][0][cap]);
+                        profit=max(prices[ind]+dp[1][cap-1],
+                                  0+dp[0][cap]);
                     }
 
-                    dp[ind][buy][cap]=profit;
+                    temp[buy][cap]=profit;
                 }
             }
+            dp=temp;
         }
-        return dp[0][1][2];
+        return dp[1][2];
     }
 };
