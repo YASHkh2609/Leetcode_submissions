@@ -1,79 +1,63 @@
 class Solution {
 private:
-    int f(int ind, int buy, int cap, vector<int>& prices,vector<vector<vector<int>>>&dp){
-        if(ind==prices.size() || cap==0)return 0;
-        if(dp[ind][buy][cap]!=-1)return dp[ind][buy][cap];
-        int profit=0;
+    int f(int ind, int num_trans,vector<int>& prices, vector<vector<int>>&dp){
+        if(ind == prices.size() || num_trans==4)return 0;
+        if(dp[ind][num_trans]!=-1)return dp[ind][num_trans];
 
-        if(buy){
-            profit=max(-prices[ind]+f(ind+1, 0, cap, prices,dp), 0+f(ind+1, 1, cap, prices,dp));
+        int profit=0;
+        if(num_trans%2==0){ //num_trans - even ==> buy
+            profit=max(-prices[ind]+f(ind+1, num_trans+1,prices,dp),
+                        0+f(ind+1, num_trans,prices,dp));
         }
-        else{
-            profit=max(prices[ind]+f(ind+1, 1, cap-1, prices,dp), 0+f(ind+1, 0, cap, prices,dp));
+        else{// num_trans - odd ==> sell
+            profit =max(prices[ind]+f(ind+1, num_trans+1, prices,dp),
+                        0+f(ind+1, num_trans, prices,dp));
         }
-        return dp[ind][buy][cap] = profit;
+        return dp[ind][num_trans]=profit;
     }
 public:
     int maxProfit(vector<int>& prices) {
         int n=prices.size();
-        // vector<vector<vector<int>>>dp(n+1, vector<vector<int>>(2, vector<int>(3,-1)));
-        // return f(0, 1, 2, prices,dp);
-        //base case
-        //ind==n
-        // vector<vector<vector<int>>>dp(n+1, vector<vector<int>>(2, vector<int>(3,0)));
-        //above we have initialised our dp with 0 so we dont need to write base case
-        // for(int j=0;j<=1;j++){
-        //     for(int k=0;k<=2;k++){
-        //         dp[n][j][k]=0;
-        //     }
-        // }
-        // for(int i=0;i<=n;i++){
-        //     for(int j=0;j<=1;j++){
-        //         dp[i][j][0]=0;
-        //     }
-        // }
-
+        vector<vector<int>>dp(n+1, vector<int>(4, -1));
+        return f(0, 0,prices,dp);
+        // vector<vector<int>>dp(n+1, vector<int>(2*k+1, 0));
+        //initialising dp array with 0 so that we dont have to write
+        //base case 
+        //base case --> dp[n][..]=0, dp[..][2k]=0;
         // for(int ind=n-1;ind>=0;ind--){
-        //     for(int buy=0;buy<=1;buy++){
-        //         for(int cap=1;cap<=2;cap++){
-        //             int profit=0;
-        //             if(buy){
-        //                 profit=max(-prices[ind]+dp[ind+1][0][cap],
-        //                            0+dp[ind+1][1][cap]);
-        //             }
-        //             else{
-        //                 profit=max(prices[ind]+dp[ind+1][1][cap-1],
-        //                           0+dp[ind+1][0][cap]);
-        //             }
-
-        //             dp[ind][buy][cap]=profit;
+        //     for(int num_trans=0;num_trans<2*k;num_trans++){
+        //         int profit=0;
+        //         if(num_trans%2==0){ //num_trans - even ==> buy
+        //             profit=max(-prices[ind]+dp[ind+1][num_trans+1],
+        //                 0+dp[ind+1][num_trans]);
         //         }
+        //         else{// num_trans - odd ==> sell
+        //             profit =max(prices[ind]+dp[ind+1][num_trans+1],
+        //                 0+dp[ind+1][num_trans]);
+        //         }
+        //         dp[ind][num_trans]=profit;
         //     }
         // }
-        // return dp[0][1][2];
-        
+        // return dp[0][0];
+    
         //SPACE OPTIMIZATION
-        vector<vector<int>>dp(2, vector<int>(3,0));
-        // initialised as 0 so no need for base case
-        for(int ind=n-1;ind>=0;ind--){
-            vector<vector<int>>temp(2, vector<int>(3,0));
-            for(int buy=0;buy<=1;buy++){
-                for(int cap=1;cap<=2;cap++){
-                    int profit=0;
-                    if(buy){
-                        profit=max(-prices[ind]+dp[0][cap],
-                                   0+dp[1][cap]);
-                    }
-                    else{
-                        profit=max(prices[ind]+dp[1][cap-1],
-                                  0+dp[0][cap]);
-                    }
-
-                    temp[buy][cap]=profit;
-                }
-            }
-            dp=temp;
-        }
-        return dp[1][2];
+        // vector<int>dp(2*k+1, 0);
+        // for(int ind=n-1;ind>=0;ind--){
+        //     vector<int>temp(2*k+1, 0);
+        //     for(int num_trans=0;num_trans<2*k;num_trans++){
+        //         int profit=0;
+        //         if(num_trans%2==0){ //num_trans - even ==> buy
+        //             profit=max(-prices[ind]+dp[num_trans+1],
+        //                 0+dp[num_trans]);
+        //         }
+        //         else{// num_trans - odd ==> sell
+        //             profit =max(prices[ind]+dp[num_trans+1],
+        //                 0+dp[num_trans]);
+        //         }
+        //         temp[num_trans]=profit;
+        //     }
+        //     dp=temp;
+        // }
+        // return dp[0];
     }
 };
