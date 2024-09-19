@@ -1,39 +1,25 @@
 class Solution {
 private:
-    vector<string> getWords(string s){
-        vector<string>vec;
+    void getWords(string s, unordered_map<string, int>&mpp){
         string temp="";
         for(int i=0;i<s.length();i++){
             if(s[i]==' '){
-                vec.push_back(temp);
+                mpp[temp]++;
                 temp="";
             }
             else{
                 temp+=s[i];
             }
         }
-        vec.push_back(temp);
-        return vec;
+        mpp[temp]++;
     }
 public:
     vector<string> uncommonFromSentences(string s1, string s2) {
-        vector<string>words1;
-        words1 = getWords(s1);
-        vector<string>words2;
-        words2 = getWords(s2);
-
         unordered_map<string, int>mpp;
-        for(auto it:words1){
-            mpp[it]++;
-            cout<<it<<" ";
-        }
-        cout<<endl;
-        for(auto it:words2){
-            mpp[it]++;
-            cout<<it<<" ";
-        }
-
+        getWords(s1, mpp);
+        getWords(s2, mpp);
         vector<string>ans;
+        
         for(auto it:mpp){
             if(it.second==1)ans.push_back(it.first);
         }
