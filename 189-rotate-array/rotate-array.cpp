@@ -1,28 +1,24 @@
 class Solution {
+private:
+    void reverse_arr(vector<int>& nums, int start, int end){
+        while(start<end){
+            swap(nums[start++], nums[end--]);
+        }
+    }
 public:
     void rotate(vector<int>& nums, int k) {
         int n=nums.size();
-        vector<int>temp;
         k = k%n;
-        int k_new = n-k;
 
-        int j = 0;
-        while(j<k_new){
-            temp.push_back(nums[j]);
-            j++;
-        }
-        int i=0;
-        while(j<n){
-            nums[i]=nums[j];
-            i++;
-            j++;
-        }
-        j=0;
-        while(j<temp.size()){
-            nums[i]=temp[j];
-            i++;
-            j++;
-        }
+        int start1 = 0;
+        int end1= n-k-1;
+        int start2 =n-k;
+        int end2=n-1;
 
+        reverse_arr(nums, start1, end1);
+        reverse_arr(nums, start2, end2);
+
+        reverse_arr(nums, 0, n-1);
+        
     }
 };
